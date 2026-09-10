@@ -1,6 +1,6 @@
 # Extracting Bitcoin Transactions to Relational Databases for Analysis in IoT
 
-This repository provides the code, datasets, and supporting resources associated with the paper **“Extracting Bitcoin Transactions to Relational Databases for Analysis in IoT,”** by **Rebeca Tonu, Otilia Muntean, and Ciprian Pungilă**. It includes a reproducible pipeline for retrieving blockchain data from a Bitcoin Core node, storing the extracted information in CSV datasets, importing it into a relational database, and evaluating SQL query execution times.
+This repository provides the code, datasets, and supporting resources associated with the paper “Extracting Bitcoin Transactions to Relational Databases for Analysis in IoT,” by Rebeca Tonu, Otilia Muntean, and Ciprian Pungilă. The work investigates the challenges of extracting, processing, and integrating Bitcoin blockchain data into a relational database designed for IoT-oriented analysis. It provides a reproducible workflow for retrieving blockchain data from a Bitcoin Core node, organizing it according to the proposed relational schema, and evaluating its query performance through empirical IoT-oriented scenarios.
 
 ---
 
