@@ -1,0 +1,64 @@
+import mysql.connector
+import time
+
+# Database connection settings
+DB_CONFIG = {
+    'host': 'your_host',
+    'user': 'your_user',
+    'password': 'your_password',
+    'database': 'your_database',
+}
+
+def execute_query(cursor, query):
+    start_time = time.time()
+    cursor.execute(query)
+    cursor.fetchall()
+    end_time = time.time()
+    return round(end_time - start_time, 6)  # Execution time in seconds
+
+def main():
+    connection = mysql.connector.connect(**DB_CONFIG)
+    cursor = connection.cursor()
+    
+    queries = {
+        "Scenario 1": """
+        SELECT d.device_name, SUM(i.amount) AS total_spent
+        FROM Inputs i
+        JOIN Transactions t ON i.transaction_id = t.transaction_id
+        JOIN Wallets w ON i.wallet_id = w.wallet_id
+        JOIN IoT_Devices d ON w.wallet_id = d.wallet_id
+        WHERE d.device_id = 1 AND t.timestamp >= NOW() - INTERVAL 7 DAY
+        GROUP BY d.device_name;
+        """,
+        
+        "Scenario 2": """
+        SELECT d.device_name, COUNT(o.output_id) AS transaction_count
+        FROM Outputs o
+        JOIN Transactions t ON o.transaction_id = t.transaction_id
+        JOIN Wallets w ON o.wallet_id = w.wallet_id
+        JOIN IoT_Devices d ON w.wallet_id = d.wallet_id
+        WHERE t.timestamp >= NOW() - INTERVAL 1 DAY
+        GROUP BY d.device_name
+        ORDER BY transaction_count DESC
+        LIMIT 10;
+        """,
+        
+        "Scenario 3": """
+        SELECT t.tx_hash, o.amount, d.device_name
+        FROM Outputs o
+        JOIN Transactions t ON o.transaction_id = t.transaction_id
+        JOIN Wallets w ON o.wallet_id = w.wallet_id
+        JOIN IoT_Devices d ON w.wallet_id = d.wallet_id
+        WHERE d.device_name LIKE 'Toll Road%' AND o.amount > 0.5;
+        """
+    }
+    
+    for scenario, query in queries.items():
+        execution_time = execute_query(cursor, query)
+        print(f"{scenario}: {execution_time} seconds")
+    
+    cursor.close()
+    connection.close()
+
+if __name__ == "__main__":
+    main()
