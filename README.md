@@ -34,9 +34,7 @@ pip install python-bitcoinrpc
 
 ## Dataset Extraction
 
-The `Retrieve.py` script connects directly to a Bitcoin Core node through JSON-RPC and extracts blockchain information over a configurable block range.
-
-The extracted data includes information about:
+The `Retrieve.py` script connects directly to a Bitcoin Core node through JSON-RPC and extracts blockchain information over a configurable block range. The extracted data is exported as CSV files containing block, transaction, input, output, and wallet information. Each CSV file includes the following attributes:
 
 ### Blocks
 
